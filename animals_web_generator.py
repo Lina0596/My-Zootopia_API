@@ -1,13 +1,16 @@
 import json
+import requests
 
-def load_data(file_path):
-    """ Loads a JSON file """
-    with open(file_path, "r") as handle:
-        return json.load(handle)
+def load_data(animal_name):
+    """ Loads data from Animals API """
+    url = f"https://api.api-ninjas.com/v1/animals?name={animal_name}"
+    request_animals = requests.get(url, headers={'X-Api-Key': "4M3o5W8uTzon7WsVE9TDRg==66XqW2bSV9BfsdFG"})
+    animals = request_animals.json()
+    return animals
 
 
 def serialize_animal(animals_data):
-    """ Generates content from JSON file """
+    """ Generates content from Animals API """
     output = ''
     output += '<li class="cards__item">\n'
     if "name" in animal:
@@ -38,9 +41,11 @@ def content_html(html_file_path, data_str, new_html_file_path):
 
 
 if __name__ == "__main__":
-    animals_data = load_data("animals_data.json")
+    animals_data = load_data("Fox")
     output = ''
     for animal in animals_data:
         output += serialize_animal(animals_data)
         content_html("animals_template.html", output, "animals.html")
+
+
 
