@@ -41,11 +41,13 @@ def content_html(html_file_path, data_str, new_html_file_path):
 
 
 if __name__ == "__main__":
-    animals_data = load_data("Fox")
+    animals_name = input("Enter an animal: ")
+    animals_data = load_data(animals_name)
     output = ''
     for animal in animals_data:
         output += serialize_animal(animals_data)
         content_html("animals_template.html", output, "animals.html")
+    print("Website was successfully generated to the file animals.html.")
 
 
 
