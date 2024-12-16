@@ -8,4 +8,4 @@ To install this project, simply clone the repository and install the dependencie
 
 ## Usage
 
-To use this project, run the following command - ` python animals_web_generator.py`.
+To use this project, run the following command - `python animals_web_generator.py`.
