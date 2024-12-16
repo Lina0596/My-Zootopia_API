@@ -1,12 +1,4 @@
-import json
-import requests
-
-def load_data(animal_name):
-    """ Loads data from Animals API """
-    url = f"https://api.api-ninjas.com/v1/animals?name={animal_name}"
-    request_animals = requests.get(url, headers={'X-Api-Key': "4M3o5W8uTzon7WsVE9TDRg==66XqW2bSV9BfsdFG"})
-    animals = request_animals.json()
-    return animals
+import data_fetcher
 
 
 def serialize_animal(animals_data):
@@ -44,7 +36,7 @@ if __name__ == "__main__":
     valid_animal = False
     while not valid_animal:
         animal_name = input("Enter an animal: ")
-        animals_data = load_data(animal_name)
+        animals_data = data_fetcher.fetch_data(animal_name)
         if animals_data == []:
             print(f"The animal '{animal_name}' you choose is not in our Database. Pleas try again!")
         else:
