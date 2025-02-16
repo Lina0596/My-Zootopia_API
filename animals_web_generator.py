@@ -2,7 +2,9 @@ import data_fetcher
 
 
 def serialize_animal(animals_data):
-    """ Generates content from Animals API """
+    """
+    Generates content from Animals API
+    """
     output = ''
     output += '<li class="cards__item">\n'
     if "name" in animal:
@@ -23,8 +25,20 @@ def serialize_animal(animals_data):
     return output
 
 
+def create_error_message(animal_name):
+    """
+    Generates a error message for the animal name
+    that doesn't exist in the API
+    """
+    output = ''
+    output += f'<h2>The animal "{animal_name}" does not exist.</h2>'
+    return output
+
+
 def content_html(html_file_path, data_str, new_html_file_path):
-    """ Places content in html file and generates a new html file """
+    """
+    Places content in html file and generates a new html file
+    """
     with open(html_file_path, "r") as html_file:
         html_data = html_file.read()
         new_html_data = html_data.replace("__REPLACE_ANIMALS_INFO__", data_str)
@@ -33,19 +47,14 @@ def content_html(html_file_path, data_str, new_html_file_path):
 
 
 if __name__ == "__main__":
-    valid_animal = False
-    while not valid_animal:
-        animal_name = input("Enter an animal: ")
-        animals_data = data_fetcher.fetch_data(animal_name)
-        if animals_data == []:
-            print(f"The animal '{animal_name}' you choose is not in our Database. Pleas try again!")
-        else:
-            output = ''
-            for animal in animals_data:
-                output += serialize_animal(animals_data)
-                content_html("animals_template.html", output, "animals.html")
-            print("Website was successfully generated to the file animals.html.")
-            valid_animal = True
-
-
-
+    animal_name = input("Enter an animal: ")
+    animals_data = data_fetcher.fetch_data(animal_name)
+    if animals_data == []:
+        output = create_error_message(animal_name)
+        content_html("animals_template.html", output, "animals.html")
+    else:
+        output = ''
+        for animal in animals_data:
+            output += serialize_animal(animals_data)
+            content_html("animals_template.html", output, "animals.html")
+    print("Website was successfully generated to the file animals.html.")
